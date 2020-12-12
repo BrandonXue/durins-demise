@@ -1,0 +1,167 @@
+{
+	"textures": [
+		{
+			"image": "dwarf_attack_down_swing_right.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 58,
+				"h": 72
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Dwarf_Sprite_Sheet-16.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 3,
+						"w": 25,
+						"h": 24
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 25,
+						"h": 24
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-13.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 10,
+						"w": 26,
+						"h": 21
+					},
+					"frame": {
+						"x": 28,
+						"y": 1,
+						"w": 26,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-19.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 7,
+						"y": 12,
+						"w": 24,
+						"h": 19
+					},
+					"frame": {
+						"x": 28,
+						"y": 24,
+						"w": 24,
+						"h": 19
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-17.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 11,
+						"w": 21,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 27,
+						"w": 21,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-15.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 2,
+						"w": 16,
+						"h": 26
+					},
+					"frame": {
+						"x": 24,
+						"y": 45,
+						"w": 16,
+						"h": 26
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-18.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 11,
+						"w": 19,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 50,
+						"w": 19,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-14.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 9,
+						"y": 3,
+						"w": 15,
+						"h": 25
+					},
+					"frame": {
+						"x": 42,
+						"y": 45,
+						"w": 15,
+						"h": 25
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ea657954cf1040ca09c8163231afb0b1:5fec829d1a5831eb47ba63fc5eb9be88:12707a32c580589082aa97a3f565cfcb$"
+	}
+}

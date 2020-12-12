@@ -1,0 +1,209 @@
+{
+	"textures": [
+		{
+			"image": "health-bar.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 585,
+				"h": 12
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "health-bar1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 66,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 131,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 196,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 261,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar6",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 326,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar7",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 391,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar8",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 456,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				},
+				{
+					"filename": "health-bar9",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 63,
+						"h": 10
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 63,
+						"h": 10
+					},
+					"frame": {
+						"x": 521,
+						"y": 1,
+						"w": 63,
+						"h": 10
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:86e0b69e9969575164c114a72d4b8b0b:0e6dd3975873c02d1ccb4b8ae6c5a2c1:a59e6007e5ec718f30b7241eb9cc8b73$"
+	}
+}

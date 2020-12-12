@@ -1,0 +1,62 @@
+{
+	"textures": [
+		{
+			"image": "inventory.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 187,
+				"h": 113
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "inventory1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 187,
+						"h": 113
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 187,
+						"h": 113
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 187,
+						"h": 113
+					}
+				},
+				{
+					"filename": "inventory2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 187,
+						"h": 113
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 5,
+						"w": 171,
+						"h": 25
+					},
+					"frame": {
+						"x": 8,
+						"y": 5,
+						"w": 171,
+						"h": 25
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:69ec7d3c3d7e4b20b0e2410f60990aea:3f20067dd60dc442b5819b837a42c36f:15284f2f553a864e8470f6749c519a20$"
+	}
+}

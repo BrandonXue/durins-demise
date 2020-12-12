@@ -1,0 +1,125 @@
+{
+	"textures": [
+		{
+			"image": "dwarf_jump_right.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 30,
+				"h": 114
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Dwarf_Sprite_Sheet-31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 4,
+						"w": 28,
+						"h": 22
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 28,
+						"h": 22
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-29.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 9,
+						"w": 28,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 25,
+						"w": 28,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-30.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 5,
+						"w": 28,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 48,
+						"w": 28,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-28.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 10,
+						"w": 26,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 71,
+						"w": 26,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Dwarf_Sprite_Sheet-32.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 12,
+						"w": 26,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 94,
+						"w": 26,
+						"h": 19
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:027241740baa1844495a9246b643b407:3714c6d595834d5bf6808c805499d6eb:8ae9fa3add70dced837edc0aeb2017c9$"
+	}
+}

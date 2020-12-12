@@ -1,0 +1,104 @@
+{
+	"textures": [
+		{
+			"image": "dwarf_idle_right.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 58,
+				"h": 45
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "dwarf-idle-right-1",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 12,
+						"w": 28,
+						"h": 19
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 28,
+						"h": 19
+					}
+				},
+				{
+					"filename": "dwarf-idle-right-0",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 10,
+						"w": 26,
+						"h": 21
+					},
+					"frame": {
+						"x": 31,
+						"y": 1,
+						"w": 26,
+						"h": 21
+					}
+				},
+				{
+					"filename": "dwarf-idle-right-3",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 10,
+						"w": 26,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 22,
+						"w": 26,
+						"h": 21
+					}
+				},
+				{
+					"filename": "dwarf-idle-right-2",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 38,
+						"h": 32
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 11,
+						"w": 26,
+						"h": 20
+					},
+					"frame": {
+						"x": 29,
+						"y": 24,
+						"w": 26,
+						"h": 20
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:57f6226f0fc699b2d1ec40d9193b4127:97290d646ea8b3d75f516944f4d9deb6:1f2892c5dd99f5cc7f548a27ea9a1136$"
+	}
+}
