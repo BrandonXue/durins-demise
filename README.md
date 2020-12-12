@@ -9,7 +9,7 @@ Give it a go: http://durins-demise-game.herokuapp.com
 ## Resources Used
 The following Artists' works were used for this project.
 
-#### Video
+#### Visuals
 - Agifarclor on DeviantArt:
   - Zombie sprite sheet: https://www.deviantart.com/agifarclor/art/Enemy-Sprite-Sheet-Zombies-620275759
 - The Bard on Pinterest:
