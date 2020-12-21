@@ -23,7 +23,7 @@ class TitleScene extends Phaser.Scene {
      */
     preload() {
         this.load.image('bg', 'assets/bkg-title-screen.jpg');
-        this.load.audio('title-screen-audio', [ 'assets/audio/Simon-Swerwer-Emergence.mp3', 'assets/audio/Simon-Swerwer-Emergence.ogg' ]);
+        this.load.audio('title-screen-audio', 'assets/audio/Simon-Swerwer-Emergence.mp3');
     }
 
     /**

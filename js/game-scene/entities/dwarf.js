@@ -17,18 +17,25 @@
  */
 
 class Dwarf extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, frame);
+    /**
+     * 
+     * @param {Phaser.Scene} scene 
+     * @param {number} x 
+     * @param {number} y 
+     * @param {CooldownPlugin} cooldownPlugin
+     */
+    constructor(scene, x, y, cooldownPlugin) {
+        super(scene, x, y);
 
         // Create quick references to important scene objects
         this.sceneTerrainMidGround = this.scene.terrain.midGround;
+        this.sceneEntityMgr = this.scene.entities;
+        this.cooldowns = cooldownPlugin;
 
         // Set initial state
         this.direction = 'right';
-        this.wasStationary = true;
         this.canDive = false;
-        this.HIT_IMMUNE_DURATION = 60;
-        this.hitImmuneCountdown = this.HIT_IMMUNE_DURATION;
+        this.hitImmuneCDKey = this.cooldowns.create(60);
         this.attHitBox = null;
 
         // Pull create cursor keys and pointer refs
@@ -144,14 +151,19 @@ class Dwarf extends Phaser.GameObjects.Sprite {
      * @param {Number} xPos The x position of the damage source.
      */
     takeHit(damage, xPos=this.x) {
-        this.body.velocity.x += (xPos > this.x ? -30 : 30);
-        if (this.hitImmuneCountdown == this.HIT_IMMUNE_DURATION) {
-            --this.hitImmuneCountdown;
+        if (this.cooldowns.isOff(this.hitImmuneCDKey)) {
+            this.cooldowns.setOn(this.hitImmuneCDKey);
             this.health -= damage;
-            if (this.health < 0)
+            if (this.health < 0) {
                 this.health = 0;
+            }
+
+            // Apply knockback
+            this.body.velocity.x += (xPos > this.x ? -300 : 300);
+
+            // Damage tint
+            this.setTint(0xFF9999);
         }
-        this.setTint(0xFF9999);
     }
 
     getHealthRatio() {
@@ -177,50 +189,24 @@ class Dwarf extends Phaser.GameObjects.Sprite {
     /**
      * Return a cursor position that is within reach
      */
-    anchoredCursorPos(anchorDist) {
-        const distToPointer = Phaser.Math.Distance.Between(
-            this.body.center.x, this.body.center.y,
-            this.activePointer.worldX, this.activePointer.worldY
-        )
-        if (distToPointer <= anchorDist) {
-            return [this.activePointer.worldX, this.activePointer.worldY];
-        } else {
-            let towardsPointer = new Phaser.Math.Vector2(
-                this.activePointer.worldX - this.body.center.x,
-                this.activePointer.worldY - this.body.center.y
-            );
+    anchoredCursorPos(anchorX, anchorY, anchorDist) {
+        let towardsPointer = new Phaser.Math.Vector2(
+            this.activePointer.worldX - anchorX,
+            this.activePointer.worldY - anchorY
+        );
+        if (towardsPointer.lengthSq() > anchorDist * anchorDist) {
             towardsPointer.setLength(anchorDist);
-            return [towardsPointer.x + this.body.center.x, towardsPointer.y + this.body.center.y];
         }
+        towardsPointer.x += anchorX;
+        towardsPointer.y += anchorY;
+        return towardsPointer;
     }
 
     update() { 
-        // When mouse clicked
-        if (this.activePointer.primaryDown) {
-            const hitboxPos = this.anchoredCursorPos(this.reach / 1.8);
-            // If hitbox doesn't exist, make one
-            if (this.attHitBox === null) {
-                this.attHitBox = this.scene.add.rectangle(hitboxPos[0]-10, hitboxPos[1]-10, 5, 5)
-                this.scene.physics.add.existing(this.attHitBox);
-                this.attHitBox.body.setAllowGravity(false);
-                this.attCollider = this.scene.physics.add.overlap(this.attHitBox, this.scene.zombies, (hitbox, zombie) => {zombie.takeHit(this.attackDamage)});
-            } 
-            // If hitbox exists, reposition it
-            else {
-                this.attHitBox.setPosition(hitboxPos[0], hitboxPos[1]);
-            }
-        }
-        // When mouse not clicked and there's a hitbox
-        else if (this.attHitBox !== null) {
-            // Get rid of it
-            this.attHitBox.destroy();
-            this.attHitBox = null;
-        }
+        let finalAnim = '';
 
-        if (this.hitImmuneCountdown != this.HIT_IMMUNE_DURATION)
-            --this.hitImmuneCountdown;
-        if (this.hitImmuneCountdown <= 0) {
-            this.hitImmuneCountdown = this.HIT_IMMUNE_DURATION;
+
+        if (this.cooldowns.isOff(this.hitImmuneCDKey)) {
             this.setTint(0xFFFFFF);
         }
 
@@ -238,10 +224,7 @@ class Dwarf extends Phaser.GameObjects.Sprite {
         // If left or right are held down, try to accelerate horizontally
         // Acceleration is greater when player is on the ground
         if (this.leftKeyEquivIsDown() && this.rightKeyEquivIsUp()) {
-            if (this.wasStationary || this.direction != 'left') {
-                this.wasStationary = false;
-                this.play('dwarf-move-left');
-            }
+            finalAnim = 'dwarf-move-left';
             this.direction = 'left';
             if (this.body.onFloor()) {
                 this.body.setAccelerationX(-this.agility * 90);
@@ -249,10 +232,7 @@ class Dwarf extends Phaser.GameObjects.Sprite {
                 this.body.setAccelerationX(-this.agility * 50);
             }
         } else if (this.rightKeyEquivIsDown() && this.leftKeyEquivIsUp()) {
-            if (this.wasStationary || this.direction != 'right') {
-                this.wasStationary = false;
-                this.play('dwarf-move-right');
-            }
+            finalAnim = 'dwarf-move-right';
             this.direction = 'right';
             if (this.body.onFloor()) {
                 this.body.setAccelerationX(this.agility * 90);
@@ -269,14 +249,54 @@ class Dwarf extends Phaser.GameObjects.Sprite {
             }
 
             // If not in motion, set idle animations
-            if (this.body.velocity.length() == 0) {
-                if (this.wasStationary) { // If this was previously stationary
-    
-                } else { // Else this was previously in motion
-                    this.wasStationary = true;
-                    this.play('dwarf-idle-' + this.direction);
-                }
+            if (this.body.velocity.x == 0) {
+                finalAnim = 'dwarf-idle-' + this.direction;
             }
+        }
+
+        // When mouse clicked
+        if (this.activePointer.primaryDown) {
+            // If hitbox doesn't exist, make one
+            if (this.attHitBox === null) {
+                this.attHitBox = this.scene.add.rectangle(0, 0, 10, 12);
+                this.scene.physics.add.existing(this.attHitBox);
+                this.attHitBox.body.setAllowGravity(false);
+                this.attCollider = this.scene.physics.add.overlap(
+                    this.attHitBox, this.sceneEntityMgr.getEntityGroup(),
+                    (hitbox, entity) => { entity.takeHit(this.attackDamage); }
+                );
+            }
+
+            // Attack left
+            if (this.activePointer.worldX < this.body.center.x) {
+                if (this.body.velocity.x > this.agility * 2.5) {
+                    this.body.setAccelerationX(0);
+                }
+                // this.body.setVelocityX(this.body.velocity.x - 10);
+                this.attHitBox.setPosition(this.body.center.x - 12, this.body.center.y + 3);
+                this.direction = 'left';
+                finalAnim = 'dwarf-swipe-left';
+            } 
+            // Attack right
+            else {
+                if (this.body.velocity.x < -this.agility * 2.5) {
+                    this.body.setAccelerationX(0);
+                }
+                // this.body.setVelocityX(this.body.velocity.x + 10);
+                this.attHitBox.setPosition(this.body.center.x + 12, this.body.center.y + 3);
+                this.direction = 'right';
+                finalAnim = 'dwarf-swipe-right';
+            }
+        }
+        // When mouse not clicked and there's a hitbox
+        else if (this.attHitBox !== null) {
+            // Get rid of it
+            this.attHitBox.destroy();
+            this.attHitBox = null;
+        }
+
+        if (finalAnim !== '' && this.anims.currentAnim.key != finalAnim) {
+            this.play(finalAnim);
         }
     }
 
@@ -309,6 +329,18 @@ class Dwarf extends Phaser.GameObjects.Sprite {
             repeat: -1,
             frameRate: 12
         });
+        scene.anims.create({
+            key: 'dwarf-swipe-left',
+            frames: scene.anims.generateFrameNames('dwarf-swipe-left', { start: 0, end: 4, prefix: 'dwarf-swipe-left-'}),
+            repeat: -1,
+            frameRate: 8
+        });
+        scene.anims.create({
+            key: 'dwarf-swipe-right',
+            frames: scene.anims.generateFrameNames('dwarf-swipe-right', { start: 0, end: 4, prefix: 'dwarf-swipe-right-'}),
+            repeat: -1,
+            frameRate: 8
+        });
     }
 
     /**
@@ -334,6 +366,16 @@ class Dwarf extends Phaser.GameObjects.Sprite {
         scene.load.atlas(
             'dwarf-move-right', 'assets/dwarf/right/move/dwarf-move-right.png', 
             'assets/dwarf/right/move/dwarf-move-right.json'
+        );
+
+        // Attack States of Character
+        scene.load.atlas(
+            'dwarf-swipe-left', 'assets/dwarf/left/swipe/dwarf-swipe-left.png',
+            'assets/dwarf/left/swipe/dwarf-swipe-left.json'
+        );
+        scene.load.atlas(
+            'dwarf-swipe-right', 'assets/dwarf/right/swipe/dwarf-swipe-right.png',
+            'assets/dwarf/right/swipe/dwarf-swipe-right.json'
         );
     }
 }

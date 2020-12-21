@@ -10,7 +10,7 @@
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "dwarf-swipe-left-0",
+					"filename": "dwarf-swipe-right-0",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -18,7 +18,7 @@
 						"h": 32
 					},
 					"spriteSourceSize": {
-						"x": -6,
+						"x": 5,
 						"y": 11,
 						"w": 34,
 						"h": 22
@@ -31,7 +31,7 @@
 					}
 				},
 				{
-					"filename": "dwarf-swipe-left-1",
+					"filename": "dwarf-swipe-right-1",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -39,7 +39,7 @@
 						"h": 32
 					},
 					"spriteSourceSize": {
-						"x": -6,
+						"x": 5,
 						"y": 11,
 						"w": 34,
 						"h": 22
@@ -52,7 +52,7 @@
 					}
 				},
 				{
-					"filename": "dwarf-swipe-left-2",
+					"filename": "dwarf-swipe-right-2",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -60,7 +60,7 @@
 						"h": 32
 					},
 					"spriteSourceSize": {
-						"x": -6,
+						"x": 5,
 						"y": 11,
 						"w": 34,
 						"h": 22
@@ -73,7 +73,7 @@
 					}
 				},
 				{
-					"filename": "dwarf-swipe-left-3",
+					"filename": "dwarf-swipe-right-3",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -81,7 +81,7 @@
 						"h": 32
 					},
 					"spriteSourceSize": {
-						"x": -6,
+						"x": 5,
 						"y": 11,
 						"w": 34,
 						"h": 22
@@ -94,7 +94,7 @@
 					}
 				},
 				{
-					"filename": "dwarf-swipe-left-4",
+					"filename": "dwarf-swipe-right-4",
 					"rotated": false,
 					"trimmed": true,
 					"sourceSize": {
@@ -102,7 +102,7 @@
 						"h": 32
 					},
 					"spriteSourceSize": {
-						"x": -6,
+						"x": 5,
 						"y": 11,
 						"w": 34,
 						"h": 22

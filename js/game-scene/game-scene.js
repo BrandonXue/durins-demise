@@ -86,14 +86,13 @@ class GameScene extends Phaser.Scene {
         this.load.image('cave4', 'assets/PixelFantasy-Caves-1.0/cave4.png')
         this.load.image('cave5', 'assets/PixelFantasy-Caves-1.0/cave5.png')
 
-        this.load.audio('game-screen-audio', [
-            'assets/audio/Simon-Swerwer-Decapitated-Camels.mp3',
-            'assets/audio/Simon-Swerwer-Decapitated-Camels.ogg'
-        ]);
+        this.load.audio('game-screen-audio', 'assets/audio/Simon-Swerwer-Decapitated-Camels.mp3');
         
         this.load.atlas('health-bar-sheet', 'assets/HUD/health-bar/health-bar.png', 'assets/HUD/health-bar/health-bar.json');
 
         this.load.atlas('inventory-sheet', 'assets/HUD/hot-bar/inventory.png', 'assets/HUD/hot-bar/inventory.json');
+
+        this.load.scenePlugin('CooldownPlugin', 'js/game-scene/cooldown-plugin.js', 'cooldowns', 'cooldowns');
     }
 
     /**
@@ -176,7 +175,7 @@ class GameScene extends Phaser.Scene {
         this.inventoryBar = this.make.sprite({ scene: this });
         this.inventoryBar.setTexture('inventory-sheet', this.anims.get('inventory-bar').frames[1].textureFrame);
         this.inventoryBar.setDepth(SceneDepth.HUD);
-        // same for invenotry bar. its harded coded to -750 / -230 for the position
+        // same for invenotry bar. its harded coded to -760, -290 for a zoom of 2.3
         this.inventoryBar.setScrollFactor(0, 0).setDisplayOrigin(-760, -290);
         // changing this scale also completely changes the static location just FYI
         this.inventoryBar.setScale(.6);
@@ -264,50 +263,17 @@ class GameScene extends Phaser.Scene {
         // NOTE: The Entity Manager will be used to keep track of how many enemies are
         // near the player, and whether or not more should be spawned.
 
+        this.entities = new EntityManager(this, 20, 20);
+
         // Create the player
-        this.dwarf = new Dwarf(this, 400, 100);
+        this.dwarf = new Dwarf(this, 400, 100, this.cooldowns);
         this.dwarf.setAgility(10).setMoveSpeed(10).setJumpHeight(10).setDiveSpeed(10);
-        this.dwarf.setAttackDamage(10).setAttackSpeed(10).setHitPoints(100);
+        this.dwarf.setAttackDamage(90).setAttackSpeed(10).setHitPoints(100);
         this.dwarf.setReach(25).setMiningSpeed(10);
         this.dwarf.configPhysics();
         this.dwarf.play('dwarf-idle-right');
         this.dwarf.setDepth(SceneDepth.player);
         this.physics.add.collider(this.dwarf, this.terrain.midground);
-        // this.physics.add.collider(this.dwarf, layer); // Ernesto's layer
-
-        // Create zombie group
-        this.zombies = this.add.group({
-            classType: Zombie,
-            active: true,
-            runChildUpdate: true,
-        });
-        this.zombies.get(300, 100, true);
-        this.zombies.getChildren().forEach(zombie => {
-            zombie.setTargetBody(this.dwarf);
-            zombie.setMoveSpeed(10).setAttackDamage(6).setAttackSpeed(10).setHitPoints(100);
-            zombie.configPhysics();
-            zombie.setDepth(SceneDepth.npc);
-            zombie.play('zombie-idle-patrol');
-            this.physics.add.collider(zombie, this.terrain.midground);
-        });
-
-        // Create bunny group
-        this.bunnies = this.add.group({
-            classType: Bunny,
-            active: true,
-            runChildUpdate: true,
-        });
-        this.bunnies.get(500, 100, true);
-        this.bunnies.get(600, 100, true);
-        this.bunnies.get(200, 100, true);
-        this.bunnies.getChildren().forEach(bunny => {
-            bunny.setTargetBody(this.dwarf);
-            bunny.setMoveSpeed(10).setAttackDamage(6).setAttackSpeed(10).setHitPoints(100);
-            bunny.configPhysics();
-            bunny.setDepth(SceneDepth.npc);
-            bunny.play('bunny-idle-patrol');
-            this.physics.add.collider(bunny, this.terrain.midground);
-        });
 
         /* ==================== Configure World Settings ===================== */
         this.physics.world.setBounds(
@@ -482,10 +448,8 @@ class GameScene extends Phaser.Scene {
      */
     update() {
         // Debug zone:
-        if (this.input.keyboard.checkDown(this.cursorKeys.shift, 2000)) {
-            // console.log(this.zombies.getFirstAlive(false));
-            // console.log(this.zombies.getChildren().length);
-            console.log(getGrass());
+        if (this.input.keyboard.checkDown(this.cursorKeys.shift, 1000)) {
+            this.entities.spawnHostile(this, this.dwarf);
         }
 
         this.dwarf.update();

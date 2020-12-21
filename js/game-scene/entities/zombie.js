@@ -14,64 +14,25 @@
  * The Zombie is a basic melee opponent.
  */
 
-class Zombie extends Phaser.GameObjects.Sprite {
+class Zombie extends BaseEntity {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
 
-        // Create quick references to important scene objects
-        this.sceneTerrainMidground = this.scene.terrain.midground;
-
-        // Initialize state
+        // // Initialize state
         this.alive = true;
-        this.healthBarRed = null;
-        this.healthBarGreen = null;
-        this.swordHitBox = null;
         this.HIT_IMMUNE_DURATION = 60;
         this.hitImmuneCountdown = this.HIT_IMMUNE_DURATION;
 
-        // Scale the sprite
+        // // Scale the sprite
         this.setScale(0.3, 0.35);
+
+        // Create components
+        this.createTweens();
+        this.createHitboxes();
+        this.healthBar = new BasicHealthBar(scene, 16, 1.5, SceneDepth.HUD);
 
         // Register self to the scene
         this.scene.add.existing(this);
-    }
-
-    /**
-     * Setter for moveSpeed stat. 
-     * @param {Number} moveSpeed Affects top speed horizontally.
-     */
-    setMoveSpeed(moveSpeed) { this.moveSpeed = moveSpeed; return this; }
-
-    /**
-     * Setter for attackDamage stat. 
-     * @param {Number} attackDamage Affects how much damage your attacks do.
-     */
-    setAttackDamage(attackDamage) { this.attackDamage = attackDamage; return this; }
-
-    /**
-     * Setter for attackSpeed stat. 
-     * @param {Number} attackSpeed Affects how quickly you can attack again.
-     */
-    setAttackSpeed(attackSpeed) { this.attackSpeed = attackSpeed; return this; }
-
-    /**
-     * Setter for hitPoints stat. If health has not been set, it is initialized to hitPoints.
-     * @param {Number} hitPoints Affects how much damage you can take without dying.
-     */
-    setHitPoints(hitPoints) {
-        this.hitPoints = hitPoints;
-        if (this.heath === undefined) { this.health = this.hitPoints; }
-        return this;
-    }
-
-    /**
-     * Set the target and its physics body for this Zombie to pursue and attack.
-     * @param {Phaser.Physics.Arcade.Body} targetBody 
-     */
-    setTargetBody(target) {
-        this.target = target;
-        this.targetBody = target.body; 
-        return this;
     }
 
     /**
@@ -87,12 +48,37 @@ class Zombie extends Phaser.GameObjects.Sprite {
         this.body.setCollideWorldBounds(true, 0, 0);
         this.body.maxVelocity.set(110, 700); // Set maximum horizontal and vertical velocity
         this.body.setDragX(200);
+    }
 
-        this.createHitboxes();
+    createTweens() {
+        this.rightAttTween = this.scene.tweens.addCounter({
+            from: 4.6,
+            to: 8.1,
+            duration: 580,
+            // Use the onComplete of the tween to dispose of colliser and tween
+            onComplete: () => {
+                if (this.swordCollider !== undefined) {
+                    this.swordCollider.destroy();
+                    this.swordCollider = undefined;
+                }
+            }
+        });
+        this.leftAttTween = this.scene.tweens.addCounter({
+            from: -0.1,
+            to: 3.2,
+            duration: 580,
+            // Use the onComplete of the tween to dispose of colliser and tween
+            onComplete: () => {
+                if (this.swordCollider !== undefined) {
+                    this.swordCollider.destroy();
+                    this.swordCollider = undefined;
+                }
+            }
+        });
     }
 
     createHitboxes() {
-        this.swordHitBox = this.scene.add.rectangle(this.body.x, this.body.y, 6, 6);
+        this.swordHitBox = this.scene.add.rectangle(0, 0, 6, 6);
         this.scene.physics.add.existing(this.swordHitBox);
         this.swordHitBox.body.setAllowGravity(false);
     }
@@ -100,50 +86,28 @@ class Zombie extends Phaser.GameObjects.Sprite {
     takeHit(damage) {
         if (this.hitImmuneCountdown == this.HIT_IMMUNE_DURATION) {
             --this.hitImmuneCountdown;
+
+            // Reduce health
             this.health -= damage;
             if (this.health < 0)
                 this.health = 0;
-        }
-    }
 
-    showHealthBar() {
-        // starting width 16, height always 1.5
-        if (this.healthBarRed === null) {
-            this.healthBarRed = this.scene.add.rectangle(this.body.center.x, this.body.y - 2, 16, 1.5, 0xFF0000);
-            this.healthBarGreen = this.scene.add.rectangle(this.body.center.x, this.body.y - 2, 16, 1.5, 0x00FF00);
-            this.healthBarRed.setDepth(SceneDepth.HUD);
-            this.healthBarGreen.setDepth(SceneDepth.HUD+1); // Display over red
-        } else {
-            this.healthBarRed.setPosition(this.body.center.x, this.body.y - 2);
-            this.healthBarGreen.setPosition(this.body.center.x, this.body.y - 2);
-            this.healthBarGreen.width = 16 * this.health / this.hitPoints;
+            // Update health bar
+            this.healthBar.setAlpha(1.0);
+            this.healthBar.setRatio(this.health / this.hitPoints);
         }
     }
 
     attackLeft() {
-        this.disposeRightAttObjects();
         // Use the tween to control the start of everything
-        if (this.leftAttTween === undefined){
             if (this.swordCollider == undefined) {
                 this.swordCollider = this.scene.physics.add.overlap(this.swordHitBox, this.target, () => {
                     this.target.takeHit(this.attackDamage, this.swordHitBox.x);
                 });
+                this.leftAttTween.restart();
+                this.play('zombie-attack-left');
             }
-            this.leftAttTween = this.scene.tweens.addCounter({
-                from: -0.1,
-                to: 3.2,
-                duration: 580,
-                // Use the onComplete of the tween to dispose of colliser and tween
-                onComplete: () => {
-                    this.disposeLeftAttObjects();
-                    if (this.swordCollider !== undefined) {
-                        this.swordCollider.destroy();
-                        this.swordCollider = undefined;
-                    }
-                }
-            });
-            this.play('zombie-attack-left');
-        }
+            
         // Position hitbox for left attack
         const val = this.leftAttTween.getValue();
         this.swordHitBox.setPosition(
@@ -151,49 +115,21 @@ class Zombie extends Phaser.GameObjects.Sprite {
             this.y + 9 * Math.cos(val));
     }
 
-    disposeLeftAttObjects() {
-        if (this.leftAttTween !== undefined) {
-            this.leftAttTween.remove();
-            this.leftAttTween = undefined;
-        }
-    }
-
     attackRight() {
-        this.disposeLeftAttObjects();
         // Use the tween to control the start of everything
-        if (this.rightAttTween === undefined){
-            if (this.swordCollider == undefined) {
-                this.swordCollider = this.scene.physics.add.overlap(this.swordHitBox, this.target, () => {
-                    this.target.takeHit(this.attackDamage);
-                });
-            }
-            this.rightAttTween = this.scene.tweens.addCounter({
-                from: 4.6,
-                to: 8.1,
-                duration: 580,
-                // Use the onComplete of the tween to dispose of colliser and tween
-                onComplete: () => {
-                    this.disposeRightAttObjects();
-                    if (this.swordCollider !== undefined) {
-                        this.swordCollider.destroy();
-                        this.swordCollider = undefined;
-                    }
-                }
+        if (this.swordCollider == undefined) {
+            this.swordCollider = this.scene.physics.add.overlap(this.swordHitBox, this.target, () => {
+                this.target.takeHit(this.attackDamage, this.swordHitBox.x);
             });
+            this.rightAttTween.restart();
             this.play('zombie-attack-right');
         }
+            
         // Position hitbox for left attack
         const val = this.rightAttTween.getValue();
         this.swordHitBox.setPosition(
             this.x - 10 * Math.sin(val) + 2,
             this.y + 3 * Math.cos(val));
-    }
-
-    disposeRightAttObjects() {
-        if (this.rightAttTween !== undefined) {
-            this.rightAttTween.remove();
-            this.rightAttTween = undefined;
-        }
     }
 
     isFacingBlock(direction) {
@@ -214,36 +150,41 @@ class Zombie extends Phaser.GameObjects.Sprite {
         }
     }
 
+    onDeathDestroy() {
+        // Remove Tweens
+        this.leftAttTween.remove();
+        this.rightAttTween.remove();
+        this.dyingTween.remove();
+
+        // Remove colliders, then hitboxes
+        if (this.swordCollider !== undefined) {
+            this.swordCollider.destroy();
+        }
+        this.swordHitBox.destroy();
+
+        // Remove health bar
+        this.healthBar.destroy();
+
+        // Destroy self
+        this.destroy();
+    }
+
     update() {
+        // If health reaches zero, trigger dying
         if (this.health == 0) {
             if (this.alive) {
-                this.play( 'zombie-melt-' + (this.body.velocity > 0 ? 'left': 'right') );
                 this.alive = false;
+
+                this.play( 'zombie-melt-' + (this.body.velocity > 0 ? 'left': 'right') );
+
                 this.dyingTween = this.scene.tweens.addCounter({
                     duration: 700,
                     onComplete: () => {
-                        this.disposeLeftAttObjects();
-                        this.disposeRightAttObjects();
-                        if (this.swordCollider !== undefined) {
-                            this.swordCollider.destroy();
-                            this.swordCollider = undefined;
-                        }
-                        if (this.swordHitBox !== undefined) {
-                            this.swordHitBox.destroy();
-                            this.swordHitBox = undefined;
-                        }
-                        this.healthBarGreen.destroy();
-                        this.healthBarRed.destroy();
-                        this.destroy();
+                        this.onDeathDestroy();
                     }
                 });
             }
             return;
-        }
-
-        // If taken damage
-        if (this.health != this.hitPoints) {
-            this.showHealthBar();
         }
 
         if (this.hitImmuneCountdown != this.HIT_IMMUNE_DURATION)
@@ -280,10 +221,14 @@ class Zombie extends Phaser.GameObjects.Sprite {
             this.body.velocity.x = 0;
             if (deltaX > 0) {
                 this.attackRight();
-                
             } else if (deltaX < 0) {
                 this.attackLeft();
             }
+        }
+
+        // If taken damage, display health bar
+        if (this.health != this.hitPoints) {
+            this.healthBar.update(this.body.center.x, this.body.y - 2);
         }
     }
 
@@ -349,3 +294,13 @@ class Zombie extends Phaser.GameObjects.Sprite {
         );
     }
 }
+
+// // at the bottom of the zombie.js file
+// Phaser.GameObjects.GameObjectFactory.register('zombie', function (x, y) {
+// 	const zom = new Zombie()
+
+//     this.displayList.add(zom)
+//     this.updateList.add(zom)
+
+//     return zom
+// })

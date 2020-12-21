@@ -49,9 +49,9 @@ const grassTypes = [
     [Block.grassBony, 1],
     [Block.grassBloody, 2],
     [Block.grassRocky, 5]
-]
+];
 function getGrassBlock() { return weightedSample(grassTypes); }
-function isGrassBlock(blockIndex) { return checkBlockType(blockIndex, grassTypes) };
+function isGrassBlock(blockIndex) { return checkBlockType(blockIndex, grassTypes); }
 
 /*          DIRT            */
 const dirtTypes = [
@@ -59,7 +59,7 @@ const dirtTypes = [
     [Block.dirtWavy, 3],
     [Block.dirtBony, 1],
     [Block.dirtRocky, 5]
-]
+];
 function getDirtBlock() { return weightedSample(dirtTypes); }
 function isDirtBlock(blockIndex) { return checkBlockType(blockIndex, dirtTypes) };
 
