@@ -16,6 +16,21 @@
  * The Dwarf is our main playable character.
  */
 
+import Phaser from '../../phaser';
+
+import dwarfIdleLeftPng from '../../../assets/dwarf/left/idle/dwarf-idle-left.png';
+import dwarfIdleLeftJson from '../../../assets/dwarf/left/idle/dwarf-idle-left.json';
+import dwarfIdleRightPng from '../../../assets/dwarf/right/idle/dwarf-idle-right.png';
+import dwarfIdleRightJson from '../../../assets/dwarf/right/idle/dwarf-idle-right.json';
+import dwarfMoveLeftPng from '../../../assets/dwarf/left/move/dwarf-move-left.png';
+import dwarfMoveLeftJson from '../../../assets/dwarf/left/move/dwarf-move-left.json';
+import dwarfMoveRightPng from '../../../assets/dwarf/right/move/dwarf-move-right.png';
+import dwarfMoveRightJson from '../../../assets/dwarf/right/move/dwarf-move-right.json';
+import dwarfSwipeLeftPng from '../../../assets/dwarf/left/swipe/dwarf-swipe-left.png';
+import dwarfSwipeLeftJson from '../../../assets/dwarf/left/swipe/dwarf-swipe-left.json';
+import dwarfSwipeRightPng from '../../../assets/dwarf/right/swipe/dwarf-swipe-right.png';
+import dwarfSwipeRightJson from '../../../assets/dwarf/right/swipe/dwarf-swipe-right.json';
+
 class Dwarf extends Phaser.GameObjects.Sprite {
     /**
      * 
@@ -205,7 +220,6 @@ class Dwarf extends Phaser.GameObjects.Sprite {
     update() { 
         let finalAnim = '';
 
-
         if (this.cooldowns.isOff(this.hitImmuneCDKey)) {
             this.setTint(0xFFFFFF);
         }
@@ -349,33 +363,17 @@ class Dwarf extends Phaser.GameObjects.Sprite {
      */
     static loadAtlases(scene) {
         // Idle States of Character
-        scene.load.atlas(
-            'dwarf-idle-left', 'assets/dwarf/left/idle/dwarf-idle-left.png',
-            'assets/dwarf/left/idle/dwarf-idle-left.json'
-        );
-        scene.load.atlas(
-            'dwarf-idle-right', 'assets/dwarf/right/idle/dwarf-idle-right.png',
-            'assets/dwarf/right/idle/dwarf-idle-right.json'
-        );
+        scene.load.atlas('dwarf-idle-left', dwarfIdleLeftPng, dwarfIdleLeftJson);
+        scene.load.atlas('dwarf-idle-right', dwarfIdleRightPng, dwarfIdleRightJson);
 
         // Movement States of Character
-        scene.load.atlas(
-            'dwarf-move-left', 'assets/dwarf/left/move/dwarf-move-left.png', 
-            '/assets/dwarf/left/move/dwarf-move-left.json'
-        );
-        scene.load.atlas(
-            'dwarf-move-right', 'assets/dwarf/right/move/dwarf-move-right.png', 
-            'assets/dwarf/right/move/dwarf-move-right.json'
-        );
+        scene.load.atlas('dwarf-move-left', dwarfMoveLeftPng, dwarfMoveLeftJson);
+        scene.load.atlas('dwarf-move-right', dwarfMoveRightPng, dwarfMoveRightJson);
 
         // Attack States of Character
-        scene.load.atlas(
-            'dwarf-swipe-left', 'assets/dwarf/left/swipe/dwarf-swipe-left.png',
-            'assets/dwarf/left/swipe/dwarf-swipe-left.json'
-        );
-        scene.load.atlas(
-            'dwarf-swipe-right', 'assets/dwarf/right/swipe/dwarf-swipe-right.png',
-            'assets/dwarf/right/swipe/dwarf-swipe-right.json'
-        );
+        scene.load.atlas('dwarf-swipe-left', dwarfSwipeLeftPng, dwarfSwipeLeftJson);
+        scene.load.atlas('dwarf-swipe-right', dwarfSwipeRightPng, dwarfSwipeRightJson);
     }
 }
+
+export default Dwarf;

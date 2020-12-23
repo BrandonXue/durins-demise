@@ -11,6 +11,10 @@
  * is used to load data from a file or generate from scratch.
  */
 
+import Phaser from '../../phaser';
+
+import { Block, getDirtBlock, getGrassBlock } from './block';
+
 /**
  * Used to load terrain data from a file into its internal Arrays,
  * or to generate new terrain data specified by its algorithms.
@@ -500,3 +504,5 @@ class Terrain extends Phaser.Tilemaps.Tilemap {
         this.foreground = this.createDynamicLayer('foreground', this.tilesets, 0, 0);
     }
 }
+
+export { Terrain, TerrainBuilder };

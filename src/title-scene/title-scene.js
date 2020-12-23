@@ -13,17 +13,25 @@
  * open the game.
  */
 
+import Phaser from '../phaser';
+
+import titleBg from '../../assets/bkg-title-screen.jpg';
+import titleMusic from '../../assets/audio/Simon-Swerwer-Emergence.mp3';
+
  /**
   * The entering scene of the program.
   */
 class TitleScene extends Phaser.Scene {
+    init(gameSceneKey) {
+        this.gameSceneKey = gameSceneKey;
+    }
 
     /**
      * Use this function to load any assets. This function comes after init().
      */
     preload() {
-        this.load.image('bg', 'assets/bkg-title-screen.jpg');
-        this.load.audio('title-screen-audio', 'assets/audio/Simon-Swerwer-Emergence.mp3');
+        this.load.image('titleCaveBackground', titleBg); //'assets/bkg-title-screen.jpg'
+        this.load.audio('title-screen-audio', titleMusic); //'assets/audio/Simon-Swerwer-Emergence.mp3'
     }
 
     /**
@@ -36,11 +44,7 @@ class TitleScene extends Phaser.Scene {
         this.sound.volume = .2;
 
         //adding background image
-        //const bgImage = this.add.image(0, 0, 'bg').setOrigin(0, 0).setScale(1, 1.35);
-        const bgImage = this.add.image(0, 0, 'bg').setOrigin(0, 0);
-        
-
-        // Tile -> empty, dirt/rock (different assets), minerals
+        const bgImage = this.add.image(0, 0, 'titleCaveBackground').setOrigin(0, 0);
         
         // Set the physics world boundaries
         this.physics.world.setBounds(0, 0, 2000, 8000);
@@ -85,12 +89,12 @@ class TitleScene extends Phaser.Scene {
      * we can add animations here if we have time.
      */
     update() {
-        //console.log("test")
+        
     }
 
     onPlayClick() {
         this.music.stop();
-        this.scene.start('game-screen');
+        this.scene.start(this.gameSceneKey);
     }
 
     onPlayHover() {
@@ -105,3 +109,5 @@ class TitleScene extends Phaser.Scene {
         });
     }
 }
+
+export default TitleScene;

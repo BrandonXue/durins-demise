@@ -13,6 +13,39 @@
  * This scene is the main Scene where the game takes place.
  */
 
+import Phaser from '../phaser';
+
+import Bunny from './entities/bunny';
+import Dwarf from './entities/dwarf';
+import Zombie from './entities/zombie';
+
+import { Block } from './terrain/block';
+import { Terrain, TerrainBuilder } from './terrain/terrain';
+import EntityManager from './entity-manager';
+
+import dirtBlocks from '../../assets/blocks/dirt.png';
+import grassBlocks from '../../assets/blocks/grass.png';
+import stoneBlocks from '../../assets/blocks/stone-ores.png';
+import blockBreakPng from '../../assets/mining/block-break.png';
+import blockBreakJson from '../../assets/mining/block-break.json';
+import miningParticlesPng from '../../assets/mining/particles.png';
+import miningParticlesJson from '../../assets/mining/particles.json';
+
+import caveBackground1Png from '../../assets/PixelFantasy-Caves-1.0/cave1.png';
+import caveBackground2Png from '../../assets/PixelFantasy-Caves-1.0/cave2.png';
+import caveBackground3Png from '../../assets/PixelFantasy-Caves-1.0/cave3.png';
+import caveBackground4Png from '../../assets/PixelFantasy-Caves-1.0/cave4.png';
+import caveBackground5Png from '../../assets/PixelFantasy-Caves-1.0/cave5.png';
+
+import healthBarPng from '../../assets/HUD/health-bar/health-bar.png';
+import healthBarJson from '../../assets/HUD/health-bar/health-bar.json';
+import hotBarPng from '../../assets/HUD/hot-bar/inventory.png';
+import hotBarJson from '../../assets/HUD/hot-bar/inventory.json';
+
+import gameMusic from '../../assets/audio/Simon-Swerwer-Decapitated-Camels.mp3';
+
+import cooldownPlugin from './cooldown-plugin.js';
+
 /**
  * This dictionary is used to lookup Game Scene objects'
  * depth values, which is essentially z-indexes. Higher
@@ -73,26 +106,26 @@ class GameScene extends Phaser.Scene {
         Zombie.loadAtlases(this);
         Bunny.loadAtlases(this);
 
-        this.load.image('dirt', 'assets/blocks/dirt.png');
-        this.load.image('grass', 'assets/blocks/grass.png');
-        this.load.image('stone-ores', 'assets/blocks/stone-ores.png');
+        this.load.image('dirt', dirtBlocks); // 'assets/blocks/dirt.png'
+        this.load.image('grass', grassBlocks); // 'assets/blocks/grass.png'
+        this.load.image('stone-ores', stoneBlocks); // 'assets/blocks/stone-ores.png'
 
-        this.load.atlas('block-break', 'assets/mining/block-break.png', 'assets/mining/block-break.json');
-        this.load.atlas('mining-particles', 'assets/mining/particles.png', 'assets/mining/particles.json');
+        this.load.atlas('block-break', blockBreakPng, blockBreakJson);
+        this.load.atlas('mining-particles', miningParticlesPng, miningParticlesJson);
 
-        this.load.image('cave1', 'assets/PixelFantasy-Caves-1.0/cave1.png')
-        this.load.image('cave2', 'assets/PixelFantasy-Caves-1.0/cave2.png')
-        this.load.image('cave3', 'assets/PixelFantasy-Caves-1.0/cave3.png')
-        this.load.image('cave4', 'assets/PixelFantasy-Caves-1.0/cave4.png')
-        this.load.image('cave5', 'assets/PixelFantasy-Caves-1.0/cave5.png')
+        this.load.image('cave1', caveBackground1Png);
+        this.load.image('cave2', caveBackground2Png);
+        this.load.image('cave3', caveBackground3Png);
+        this.load.image('cave4', caveBackground4Png);
+        this.load.image('cave5', caveBackground5Png);
 
-        this.load.audio('game-screen-audio', 'assets/audio/Simon-Swerwer-Decapitated-Camels.mp3');
+        this.load.audio('game-screen-audio', gameMusic);
         
-        this.load.atlas('health-bar-sheet', 'assets/HUD/health-bar/health-bar.png', 'assets/HUD/health-bar/health-bar.json');
+        this.load.atlas('health-bar-sheet', healthBarPng, healthBarJson);
 
-        this.load.atlas('inventory-sheet', 'assets/HUD/hot-bar/inventory.png', 'assets/HUD/hot-bar/inventory.json');
+        this.load.atlas('inventory-sheet', hotBarPng, hotBarJson);
 
-        this.load.scenePlugin('CooldownPlugin', 'js/game-scene/cooldown-plugin.js', 'cooldowns', 'cooldowns');
+        this.load.scenePlugin('CooldownPlugin', cooldownPlugin, 'cooldowns', 'cooldowns');
     }
 
     /**
@@ -477,3 +510,5 @@ class GameScene extends Phaser.Scene {
         this.scrollTilesSprites();
     }
 }
+
+export { SceneDepth, GameScene };

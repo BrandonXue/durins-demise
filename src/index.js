@@ -6,6 +6,14 @@
  * Registers game Scenes, and launches the title Scene.
  */
 
+import Phaser from './phaser';
+
+import TitleScene from './title-scene/title-scene';
+import { GameScene } from './game-scene/game-scene';
+
+// Webpack will inject styles into DOM, default "styleTag" injection.
+import '../src/styles.css';
+
 // Phaser required config dictionary
 var config = {
     type: Phaser.AUTO, // Let Phaser determine if WebGL or canvas
@@ -22,7 +30,7 @@ var config = {
             gravity: { y: 600 },
             debug: true
         }
-    }
+    },
 };
 
 // Create Phaser Game using config object.
@@ -33,4 +41,4 @@ phaserGame.scene.add('title-screen', TitleScene);
 phaserGame.scene.add('game-screen', GameScene);
 
 // Start the scene with key == 'title-screen'
-phaserGame.scene.start('title-screen');
+phaserGame.scene.start('title-screen', 'game-screen');

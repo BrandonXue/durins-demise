@@ -14,6 +14,12 @@
  * The Zombie is a basic melee opponent.
  */
 
+import { BasicHealthBar, BaseEntity } from './base-entity';
+import { SceneDepth } from '../game-scene';
+
+import zombiePng from '../../../assets/zombie/zombie.png';
+import zombieJson from '../../../assets/zombie/zombie.json';
+
 class Zombie extends BaseEntity {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
@@ -288,12 +294,11 @@ class Zombie extends BaseEntity {
      * @param {Phaser.Scene} scene 
      */
     static loadAtlases(scene) {
-        scene.load.atlas(
-            'zombie', 'assets/zombie/zombie.png',
-            'assets/zombie/zombie.json'
-        );
+        scene.load.atlas('zombie', zombiePng, zombieJson);
     }
 }
+
+export default Zombie;
 
 // // at the bottom of the zombie.js file
 // Phaser.GameObjects.GameObjectFactory.register('zombie', function (x, y) {

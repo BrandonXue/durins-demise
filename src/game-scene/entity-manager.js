@@ -7,6 +7,11 @@
  * and managing entity populations.
  */
 
+import Bunny from './entities/bunny';
+import Zombie from './entities/zombie';
+
+import { SceneDepth } from './game-scene';
+
 /**
  * Delegate for managing entity spawning.
  */
@@ -135,3 +140,5 @@ class EntityManager {
         this.peacefulCount += 1;
     }
 }
+
+export default EntityManager;

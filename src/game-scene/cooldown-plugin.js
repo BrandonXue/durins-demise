@@ -76,3 +76,5 @@ CooldownPlugin.prototype = {
 }
 
 CooldownPlugin.prototype.constructor = CooldownPlugin;
+
+export default CooldownPlugin;

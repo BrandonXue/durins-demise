@@ -11,6 +11,8 @@
  * This file contains classes for creating basic entities.
  */
 
+import Phaser from '../../phaser';
+
 class BasicHealthBar {
 
     /**
@@ -113,3 +115,5 @@ class BaseEntity extends Phaser.GameObjects.Sprite {
         console.error(this.name + ' has not implemented loadAtlases()');
     }
 }
+
+export { BasicHealthBar, BaseEntity };

@@ -103,3 +103,5 @@ function checkBlockType(blockIndex, type) {
     }
     return false;
 }
+
+export {Block, getGrassBlock, getDirtBlock};

@@ -11,6 +11,14 @@
  * subclass of Phaser.GameObjects.Sprite.
  */
 
+import { BasicHealthBar, BaseEntity } from './base-entity';
+import { SceneDepth } from '../game-scene';
+
+import bunnyLeftPng from '../../../assets/bunny/left/bunny_left.png';
+import bunnyLeftJson from '../../../assets/bunny/left/bunny_left.json';
+import bunnyRightPng from '../../../assets/bunny/right/bunny_right.png';
+import bunnyRightJson from '../../../assets/bunny/right/bunny_right.json';
+
 /**
  * What's a bunny doing in a cave? Looking for carrots?
  */
@@ -151,13 +159,9 @@ class Bunny extends BaseEntity {
      * @param {Phaser.Scene} scene 
      */
     static loadAtlases(scene) {
-        scene.load.atlas(
-            'bunny', 'assets/bunny/left/bunny_left.png',
-            'assets/bunny/left/bunny_left.json'
-        );
-        scene.load.atlas(
-            'bunny-right', 'assets/bunny/right/bunny_right.png',
-            'assets/bunny/right/bunny_right.json'
-        );
+        scene.load.atlas('bunny', bunnyLeftPng, bunnyLeftJson);
+        scene.load.atlas('bunny-right', bunnyRightPng, bunnyRightJson);
     }
 }
+
+export default Bunny;
