@@ -24,7 +24,7 @@ The following Artists' works were used for this project.
   - "Simple Inventory": https://fujiidew.itch.io/simple-inventory
   
 #### Audio
-- Simon Swerver on YouTube:
+- Simon Swerwer on YouTube:
   - License type: https://creativecommons.org/licenses/by-nc-sa/3.0/
   - "Emergence": https://youtu.be/kCduWDses2o
   - "Decapitated Camels": https://youtu.be/_aibTdZJOQ0
