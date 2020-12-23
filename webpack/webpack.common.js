@@ -21,6 +21,10 @@ module.exports = {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
             },
+            // {
+            //     test: /\.ico$/i,
+            //     loader: 'file?name=[name].[ext]',
+            // },
             {
                 test: /\.(mp3|ogg)$/i,
                 use: ['file-loader'],
@@ -33,7 +37,8 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             title: 'Durin\'s Demise',
-            // template: "index.html",
+            template: "index.html",
+            favicon: "favicon.ico",
         })
       ]
 };
