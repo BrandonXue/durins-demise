@@ -30,7 +30,6 @@ class TitleScene extends Phaser.Scene {
      * Use this function to load any assets. This function comes after init().
      */
     preload() {
-        console.log(titleBg);
         this.load.image('titleCaveBackground', titleBg); //'assets/bkg-title-screen.jpg'
         this.load.audio('title-screen-audio', titleMusic); //'assets/audio/Simon-Swerwer-Emergence.mp3'
     }
