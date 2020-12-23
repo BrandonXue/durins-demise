@@ -8,9 +8,11 @@
 
 import Phaser from './phaser';
 
-import CooldownPlugin from './game-scene/cooldown-plugin';
 import TitleScene from './title-scene/title-scene';
 import { GameScene } from './game-scene/game-scene';
+
+// Webpack will inject styles into DOM, default "styleTag" injection.
+import '../src/styles.css';
 
 // Phaser required config dictionary
 var config = {
@@ -29,15 +31,6 @@ var config = {
             debug: true
         }
     },
-    plugins: {
-        scene: [
-            {
-                key: 'CooldownPlugin',
-                plugin: CooldownPlugin,
-                mapping: 'cooldowns'
-            }
-        ]
-    }
 };
 
 // Create Phaser Game using config object.
