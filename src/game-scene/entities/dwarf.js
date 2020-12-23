@@ -50,7 +50,7 @@ class Dwarf extends Phaser.GameObjects.Sprite {
         // Set initial state
         this.direction = 'right';
         this.canDive = false;
-        // this.hitImmuneCDKey = this.cooldowns.create(60);
+        this.hitImmuneCDKey = this.cooldowns.create(60);
         this.attHitBox = null;
 
         // Pull create cursor keys and pointer refs
@@ -166,19 +166,19 @@ class Dwarf extends Phaser.GameObjects.Sprite {
      * @param {Number} xPos The x position of the damage source.
      */
     takeHit(damage, xPos=this.x) {
-        // if (this.cooldowns.isOff(this.hitImmuneCDKey)) {
-        //     this.cooldowns.setOn(this.hitImmuneCDKey);
-        //     this.health -= damage;
-        //     if (this.health < 0) {
-        //         this.health = 0;
-        //     }
+        if (this.cooldowns.isOff(this.hitImmuneCDKey)) {
+            this.cooldowns.setOn(this.hitImmuneCDKey);
+            this.health -= damage;
+            if (this.health < 0) {
+                this.health = 0;
+            }
 
-        //     // Apply knockback
-        //     this.body.velocity.x += (xPos > this.x ? -300 : 300);
+            // Apply knockback
+            this.body.velocity.x += (xPos > this.x ? -300 : 300);
 
-        //     // Damage tint
-        //     this.setTint(0xFF9999);
-        // }
+            // Damage tint
+            this.setTint(0xFF9999);
+        }
     }
 
     getHealthRatio() {
@@ -220,10 +220,9 @@ class Dwarf extends Phaser.GameObjects.Sprite {
     update() { 
         let finalAnim = '';
 
-
-        // if (this.cooldowns.isOff(this.hitImmuneCDKey)) {
-        //     this.setTint(0xFFFFFF);
-        // }
+        if (this.cooldowns.isOff(this.hitImmuneCDKey)) {
+            this.setTint(0xFFFFFF);
+        }
 
         // If on the floor and spacebar is down, jump
         if (this.upKeyEquivIsDown() && this.downKeyEquivIsUp() && this.body.onFloor()) {
